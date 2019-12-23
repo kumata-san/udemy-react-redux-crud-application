@@ -1,47 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
-const App = () => {
-  const profiles = [
-    {
-      name: "Taro",
-      age: 10
-    },
-    {
-      name: "Hanako",
-      age: 5
-    },
-    {
-      name: "NoName",
-      age: 3
-    }
-  ]
-  return (
-    <div>
-      {/* JSのコードは{}で囲わないとダメ */}
-      {
-        profiles.map((profile, index) => {
-          return <User name={profile.name} age={profile.age} key={index} />
-        })
-      }
-      {/* <User name={"Taro"} age={10} />
-      <User name={"Hanako"} age={5} /> */}
-    </div>
-  )
-}
+const App = () => (<Counter></Counter>)
 
-const User = (props) => {
-  return <div>Hi, I am {props.name}, and {props.age} years old! </div>
-}
-
-// User.defaultProps = {
-//   age: 1
-// }
-
-// プロパティの型は始めに決めておきましょう。大規模になってくると大変になってくるよ！
-User.propTypes = {
-  name: PropTypes.string,
-  age: PropTypes.number.isRequired // ageというkeyが設定されていないとerrorを吐くようにisRequiredを入れる
+class Counter extends Component {
+  constructor(props) { // 初期化処理で実行されるメソッド
+    super(props)
+    console.log(this.state)
+    this.state = { count: 0 } // 初期化時の処理としてオブジェクトが作成される
+  }
+  handlePlusButton = () => {
+    // this.state = { count: this.state.count } // 直接stateをいじったらアカン！って怒られるよ
+    this.setState({ count: this.state.count + 1 }) // 状態を変えるときはsetStateを絶対使おう！！
+  }
+  handleMinusButton = () => {
+    this.setState({ count: this.state.count -1 })
+  }
+  render(){
+    console.log(this.state)
+    return (
+      <React.Fragment>
+        <div>
+          count: {this.state.count}
+        </div>
+        <button onClick={this.handlePlusButton}>+1</button>
+        <button onClick={this.handleMinusButton}>-1</button>
+      </React.Fragment>
+    )
+  }
 }
 
 export default App;
